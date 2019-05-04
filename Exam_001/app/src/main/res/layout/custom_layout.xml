@@ -17,11 +17,12 @@
 
             <TextView
                 android:id="@+id/textView8"
+                style="@style/CustomText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:width="350dp"
-                android:text="Город:" />
+                android:text="@string/city" />
 
             <Spinner
                 android:id="@+id/spinner"
@@ -41,18 +42,19 @@
 
             <TextView
                 android:id="@+id/textView2"
+                style="@style/CustomText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
                 android:layout_weight="1"
-                android:text="Имя объекта:" />
+                android:text="@string/estate_name" />
 
             <EditText
                 android:id="@+id/editText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Имя объекта"
+                android:hint="@string/estate_name"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -63,18 +65,19 @@
 
             <TextView
                 android:id="@+id/textView"
+                style="@style/CustomText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
                 android:layout_weight="1"
-                android:text="Адрес: " />
+                android:text="@string/address" />
 
             <EditText
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Улица и дом"
+                android:hint="@string/street_home"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -85,18 +88,19 @@
 
             <TextView
                 android:id="@+id/textView3"
+                style="@style/CustomText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
                 android:layout_weight="1"
-                android:text="ФИО заказчика:" />
+                android:text="@string/customer_name" />
 
             <EditText
                 android:id="@+id/editText3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="ФИО заказчика"
+                android:hint="@string/customer_name"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -107,7 +111,8 @@
 
             <TextView
                 android:id="@+id/textView9"
-                android:layout_width="wrap_content"
+                style="@style/CustomText"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:width="350dp"
@@ -153,18 +158,19 @@
 
             <TextView
                 android:id="@+id/textView4"
+                style="@style/CustomText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
                 android:layout_weight="1"
-                android:text="Температура воздуха:" />
+                android:text="@string/air_heat" />
 
             <EditText
                 android:id="@+id/editText4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Температура воздуха"
+                android:hint="@string/air_heat"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -175,18 +181,19 @@
 
             <TextView
                 android:id="@+id/textView5"
+                style="@style/CustomText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
                 android:layout_weight="1"
-                android:text="Влажность воздуха:" />
+                android:text="@string/humidity" />
 
             <EditText
                 android:id="@+id/editText5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Влажность воздуха"
+                android:hint="@string/humidity"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -197,18 +204,19 @@
 
             <TextView
                 android:id="@+id/textView6"
+                style="@style/CustomText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
                 android:layout_weight="1"
-                android:text="Атмосферное давление:" />
+                android:text="@string/pressure" />
 
             <EditText
                 android:id="@+id/editText6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Атмосферное давление"
+                android:hint="@string/pressure"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
@@ -219,18 +227,19 @@
 
             <TextView
                 android:id="@+id/textView7"
+                style="@style/CustomText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
                 android:layout_weight="1"
-                android:text="Номер отчета:" />
+                android:text="@string/report_number" />
 
             <EditText
                 android:id="@+id/editText7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Номер отчета"
+                android:hint="@string/report_number"
                 android:inputType="textPersonName" />
         </LinearLayout>
 

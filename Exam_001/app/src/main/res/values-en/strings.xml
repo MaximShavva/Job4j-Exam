@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FirstExam</string>
+    <string name="domain_prompt">Choose domain</string>
+    <string name="day_prompt">Choose day</string>
+    <string name="month_prompt">Choose month</string>
+    <string name="year_prompt">Choose year</string>
+    <string name="exp_date">Date of test:</string>
+    <string name="hello_maxim">Hello, Maxim Shavva!</string>
+    <string name="radio_button1">RadioButton1</string>
+    <string name="radio_button2">RadioButton2</string>
+    <string name="radio_button3">RadioButton3</string>
+    <string name="radio_button4">RadioButton4</string>
+    <string name="button_left">Button</string>
+    <string name="button_right">Button</string>
+    <string name="city">City</string>
+    <string name="street_home">Street and Apt.</string>
+    <string name="estate_name">Estate name</string>
+    <string name="address">Address</string>
+    <string name="customer_name">Full name</string>
+    <string name="air_heat">Air temperature</string>
+    <string name="humidity">Air humidity</string>
+    <string name="pressure">Air pressure</string>
+    <string name="report_number">Report number</string>
+    <string-array name="domain_arrays">
+        <item>Choose domain</item>
+        <item>Moscow region</item>
+        <item>Saint Petersburg region</item>
+    </string-array>
+    <string-array name="day_arrays">
+        <item>Day</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+    </string-array>
+    <string-array name="month_arrays">
+        <item>Month</item>
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>December</item>
+    </string-array>
+    <string-array name="year_arrays">
+        <item>Year</item>
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+    </string-array>
+</resources>
