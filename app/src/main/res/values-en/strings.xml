@@ -11,8 +11,8 @@
     <string name="radio_button2">RadioButton2</string>
     <string name="radio_button3">RadioButton3</string>
     <string name="radio_button4">RadioButton4</string>
-    <string name="button_left">Button</string>
-    <string name="button_right">Button</string>
+    <string name="button_left">Back</string>
+    <string name="button_right">Next</string>
     <string name="city">City</string>
     <string name="street_home">Street and Apt.</string>
     <string name="estate_name">Estate name</string>
