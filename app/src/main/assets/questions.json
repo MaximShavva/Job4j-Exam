@@ -1,0 +1,73 @@
+{
+  "questions": [
+    {
+      "ID": 1,
+      "TEXT": "How many primitive variables does Java have?",
+      "OPTIONS": [
+        {
+          "OPTION_ID": 1,
+          "OPTION_TEXT": "One"
+        },
+        {
+          "OPTION_ID": 2,
+          "OPTION_TEXT": "One hundred"
+        },
+        {
+          "OPTION_ID": 3,
+          "OPTION_TEXT": "Five"
+        },
+        {
+          "OPTION_ID": 4,
+          "OPTION_TEXT": "Eight"
+        }
+      ],
+      "ANSWER": 4
+    },
+    {
+      "ID": 2,
+      "TEXT": "What is Java Virtual Machine?",
+      "OPTIONS": [
+        {
+          "OPTION_ID": 1,
+          "OPTION_TEXT": "Time-machine."
+        },
+        {
+          "OPTION_ID": 2,
+          "OPTION_TEXT": "Command processor to perform Java-programs."
+        },
+        {
+          "OPTION_ID": 3,
+          "OPTION_TEXT": "Steam engine."
+        },
+        {
+          "OPTION_ID": 4,
+          "OPTION_TEXT": "Machine you do not have yet."
+        }
+      ],
+      "ANSWER": 2
+    },
+    {
+      "ID": 3,
+      "TEXT": "What is happen if we try unboxing null?",
+      "OPTIONS": [
+        {
+          "OPTION_ID": 1,
+          "OPTION_TEXT": "We watching devil jumps out."
+        },
+        {
+          "OPTION_ID": 2,
+          "OPTION_TEXT": "We getting 0"
+        },
+        {
+          "OPTION_ID": 3,
+          "OPTION_TEXT": "We getting NullPointerException"
+        },
+        {
+          "OPTION_ID": 4,
+          "OPTION_TEXT": "We getting ArithmeticException"
+        }
+      ],
+      "ANSWER": 3
+    }
+  ]
+}
