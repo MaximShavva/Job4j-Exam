@@ -93,39 +93,43 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setListeners() {
         Button next = findViewById(R.id.next);
-        next.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        RadioGroup variants = findViewById(R.id.variants);
-                        if (variants.getCheckedRadioButtonId() == -1) {
-                            Toast.makeText(MainActivity.this,
-                                    "Fill in any answer",
-                                    Toast.LENGTH_SHORT)
-                                    .show();
-                        } else {
-                            questions.get(position)
-                                    .setGiven(variants.getCheckedRadioButtonId());
-                            position++;
-                            fillForm();
-                            showAnswer();
-                        }
-                    }
-                }
-        );
+        next.setOnClickListener(this::nextBtn);
         Button previous = findViewById(R.id.previous);
-        previous.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        RadioGroup variants = findViewById(R.id.variants);
-                        questions.get(position)
-                                .setGiven(variants.getCheckedRadioButtonId());
-                        position--;
-                        fillForm();
-                    }
-                }
-        );
+        previous.setOnClickListener(this::backBtn);
+    }
+
+    /**
+     * Передаём этот метод по ссылке в OnclickListener::onClick для кнопки next.
+     *
+     * @param view ссылка на кнопку next.
+     */
+    private void nextBtn(View view) {
+        RadioGroup variants = findViewById(R.id.variants);
+        if (variants.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(MainActivity.this,
+                    "Fill in any answer",
+                    Toast.LENGTH_SHORT)
+                    .show();
+        } else {
+            questions.get(position)
+                    .setGiven(variants.getCheckedRadioButtonId());
+            position++;
+            fillForm();
+            showAnswer();
+        }
+    }
+
+    /**
+     * Передаём этот метод по ссылке в OnclickListener::onClick для кнопки previous.
+     *
+     * @param view ссылка на кнопку back.
+     */
+    private void backBtn(View view) {
+        RadioGroup variants = findViewById(R.id.variants);
+        questions.get(position)
+                .setGiven(variants.getCheckedRadioButtonId());
+        position--;
+        fillForm();
     }
 
     /**
