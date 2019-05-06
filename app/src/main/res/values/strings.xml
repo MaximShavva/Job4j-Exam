@@ -21,6 +21,12 @@
     <string name="humidity">Влажность воздуха</string>
     <string name="pressure">Атмосферное давление</string>
     <string name="report_number">Номер отчета</string>
+    <string name="your_answer">Ваш ответ был %d, правильный %d</string>
+    <string name="fill_in">Ответьте на вопрос</string>
+    <string name="results">Ваш результат : %d правильных из %d</string>
+    <string name="begin">Сначала</string>
+    <string name="backward">Назад</string>
+    <string name="hint_button">Подсказка</string>
     <string-array name="domain_arrays">
         <item>Выберите область</item>
         <item>Московская</item>
