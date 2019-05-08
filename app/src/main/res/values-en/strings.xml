@@ -28,6 +28,11 @@
     <string name="begin">Begin</string>
     <string name="backward">Back</string>
     <string name="hint_button">Hint</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="first_fragment">First fragment!!!</string>
+    <string name="next_fragment">Next fragment</string>
+    <string name="second_fragment">Second fragment</string>
+    <string name="back">Back</string>
     <string-array name="domain_arrays">
         <item>Choose domain</item>
         <item>Moscow region</item>
