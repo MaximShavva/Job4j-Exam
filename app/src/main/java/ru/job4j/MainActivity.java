@@ -1,6 +1,7 @@
 package ru.job4j;
 
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,9 @@ import java.util.Locale;
  * @version 1.
  * @since 6.05.2019г.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity
+        extends AppCompatActivity
+        implements ConfirmHintDialogFragment.ConfirmHintDialogListener {
 
     /**
      * Используется для фильтрации вывода в LogCat.
@@ -174,10 +177,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view ссылка на кнопку hint.
      */
     private void hintBtn(View view) {
-        Intent intent = new Intent(MainActivity.this, HintActivity.class);
-        intent.putExtra(HINT_FOR, position);
-        intent.putExtra(HINT_QUESTION, questions.get(position).getText());
-        startActivity(intent);
+        DialogFragment dialog = new ConfirmHintDialogFragment();
+        dialog.show(getSupportFragmentManager(), "dialog_tag");
     }
 
     /**
@@ -263,5 +264,18 @@ public class MainActivity extends AppCompatActivity {
      */
     public void toExamList(View view) {
         startActivity(new Intent(this, ExamsActivity.class));
+    }
+
+    @Override
+    public void onPositiveDialogClick(DialogFragment dialog) {
+        Intent intent = new Intent(MainActivity.this, HintActivity.class);
+        intent.putExtra(HINT_FOR, position);
+        intent.putExtra(HINT_QUESTION, questions.get(position).getText());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNegativeDialogClick(DialogFragment dialog) {
+        Toast.makeText(this, "Молодец!!!", Toast.LENGTH_SHORT).show();
     }
 }
