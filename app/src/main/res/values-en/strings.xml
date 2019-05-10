@@ -34,6 +34,7 @@
     <string name="second_fragment">Second fragment</string>
     <string name="back">Back</string>
     <string name="to_list">To Exam List</string>
+    <string name="date_time">Data/Time</string>
     <string-array name="domain_arrays">
         <item>Choose domain</item>
         <item>Moscow region</item>
