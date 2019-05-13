@@ -9,19 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ExamsActivity"
-            android:launchMode="singleInstance">
+        <activity android:name=".infragment.BaseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ExamsActivity"
+            android:launchMode="singleInstance"></activity>
         <activity android:name=".HostFragmentActivity" />
         <activity android:name=".ResultActivity" />
         <activity android:name=".HintActivity" />
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
