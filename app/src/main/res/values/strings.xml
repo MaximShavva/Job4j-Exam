@@ -27,6 +27,8 @@
     <string name="begin">Сначала</string>
     <string name="backward">Назад</string>
     <string name="hint_button">Подсказка</string>
+    <string name="add_item">Добавить</string>
+    <string name="delete_item">Удалить</string>
     <string-array name="domain_arrays">
         <item>Выберите область</item>
         <item>Московская</item>
