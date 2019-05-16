@@ -22,6 +22,12 @@
     <string name="humidity">Air humidity</string>
     <string name="pressure">Air pressure</string>
     <string name="report_number">Report number</string>
+    <string name="your_answer">Your answer is %d, correct is %d</string>
+    <string name="fill_in">Fill in any answer</string>
+    <string name="results">Your results : %d true of %d in all</string>
+    <string name="begin">Begin</string>
+    <string name="backward">Back</string>
+    <string name="hint_button">Hint</string>
     <string-array name="domain_arrays">
         <item>Choose domain</item>
         <item>Moscow region</item>
