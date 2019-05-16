@@ -1,0 +1,52 @@
+{
+  "profiles": [
+    {
+      "firstName": "Name1",
+      "lastName": "LastName1",
+      "birthDay": "20.01.1986",
+      "photo": "https://domain.ru/images/image001.jpg",
+      "profession": "engineer",
+      "code": 1
+    },
+    {
+      "firstName": "Name2",
+      "lastName": "LastName2",
+      "birthDay": "01.03.1988",
+      "photo": "https://domain.ru/images/image002.jpg",
+      "profession": "engineer",
+      "code": 1
+    },
+    {
+      "firstName": "Name3",
+      "lastName": "LastName3",
+      "birthDay": "15.07.1991",
+      "photo": "https://domain.ru/images/image003.jpg",
+      "profession": "technician",
+      "code": 2
+    },
+    {
+      "firstName": "Name4",
+      "lastName": "LastName4",
+      "birthDay": "04.06.1990",
+      "photo": "https://domain.ru/images/image004.jpg",
+      "profession": "technician",
+      "code": 2
+    },
+    {
+      "firstName": "Name5",
+      "lastName": "LastName5",
+      "birthDay": "03.01.1998",
+      "photo": "https://domain.ru/images/image005.jpg",
+      "profession": "technician",
+      "code": 2
+    },
+    {
+      "firstName": "Name6",
+      "lastName": "LastName6",
+      "birthDay": "28.02.1995",
+      "photo": "https://domain.ru/images/image006.jpg",
+      "profession": "manager",
+      "code": 3
+    }
+  ]
+}
