@@ -88,4 +88,10 @@
         <item>2018</item>
         <item>2019</item>
     </string-array>
+
+    <string name="hello_blank_fragment">Пустой фрагмент Hello</string>
+    <string name="first_fragment">Первый фрагмент!!!</string>
+    <string name="next_fragment">Следующий фрагмент</string>
+    <string name="second_fragment">Второй фрагмент</string>
+    <string name="back">Back</string>
 </resources>
