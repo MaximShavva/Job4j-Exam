@@ -94,4 +94,5 @@
     <string name="next_fragment">Следующий фрагмент</string>
     <string name="second_fragment">Второй фрагмент</string>
     <string name="back">Back</string>
+    <string name="to_list">К списку экзаменов</string>
 </resources>

@@ -60,4 +60,11 @@
             android:layout_weight="1"
             android:text="@string/button_right" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/exam_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/to_list"
+        android:onClick="toExamList"/>
 </LinearLayout>

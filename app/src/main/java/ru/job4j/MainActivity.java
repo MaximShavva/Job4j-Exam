@@ -288,4 +288,12 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
     }
+
+    /**
+     * ExamsActivity запускается в режиме singleInstance
+     * чтобы стек не копился.
+     */
+    public void toExamList(View view) {
+        startActivity(new Intent(this, ExamsActivity.class));
+    }
 }
