@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.dialogtest;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import ru.job4j.R;
 
 /**
  * Класс - содержит в себе Кнопку для вызова диалогов установки
