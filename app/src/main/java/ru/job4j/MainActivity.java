@@ -1,10 +1,9 @@
 package ru.job4j;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -12,7 +11,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Arrays;
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,8 +22,8 @@ import java.util.Locale;
  * Класс - Активность - тест с вопросами.
  *
  * @author Шавва Максим.
- * @version 1.
- * @since 6.05.2019г.
+ * @version 1.1
+ * @since 17.05.2019г.
  */
 public class MainActivity
         extends AppCompatActivity
@@ -53,35 +55,7 @@ public class MainActivity
     /**
      * Содержит список вопросов
      */
-    private final List<Question> questions = Arrays.asList(
-            new Question(
-                    1, "How many primitive variables does Java have?",
-                    Arrays.asList(
-                            new Option(1, "One"),
-                            new Option(2, "One hundred"),
-                            new Option(3, "Five"),
-                            new Option(4, "Eight")
-                    ), 4
-            ),
-            new Question(
-                    2, "What is Java Virtual Machine?",
-                    Arrays.asList(
-                            new Option(1, "Time-machine."),
-                            new Option(2, "Command processor to perform Java-programs."),
-                            new Option(3, "Steam engine."),
-                            new Option(4, "Machine you do not have yet.")
-                    ), 2
-            ),
-            new Question(
-                    3, "What is happen if we try unboxing null?",
-                    Arrays.asList(
-                            new Option(1, "We watching devil jumps out."),
-                            new Option(2, "We getting 0"),
-                            new Option(3, "We getting NullPointerException"),
-                            new Option(4, "We getting ArithmeticException")
-                    ), 3
-            )
-    );
+    private List<Question> questions = new ArrayList<>();
 
     /**
      * Указатель на текущий вопрос.
@@ -95,17 +69,36 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "onCreate");
         if (savedInstanceState != null) {
             this.spins = savedInstanceState.getInt("spins", -1);
             this.correct = savedInstanceState.getInt("correct", 0);
             this.position = savedInstanceState.getInt("position", 0);
             int checked = savedInstanceState.getInt("checked", -1);
             ((RadioGroup) findViewById(R.id.variants)).check(checked);
-            Log.d(TAG, String.format("Количество поворотов экрана = %d", spins));
         }
+        setQuestions();
         this.fillForm();
         this.setListeners();
+    }
+
+    /**
+     * Заполняем список вопросами.
+     */
+    private void setQuestions() {
+        QuestionsSupplier supplier = new QuestionsSupplier();
+        try {
+            questions = supplier.getQuestions(this, "questions.json");
+        } catch (IOException e) {
+            Toast.makeText(this,
+                    "Reading data from file is fault!",
+                    Toast.LENGTH_LONG)
+                    .show();
+        } catch (JSONException e) {
+            Toast.makeText(this,
+                    "It Fails to read Questions!",
+                    Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     /**
@@ -132,6 +125,7 @@ public class MainActivity
             Intent intent = new Intent(MainActivity.this, ResultActivity.class);
             intent.putExtra(ALL, questions.size());
             intent.putExtra(RIGHT, correct);
+            intent.putExtra("id", getIntent().getIntExtra("id", -1));
             startActivity(intent);
             return;
         }
@@ -215,24 +209,6 @@ public class MainActivity
                 .show();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
-
     /**
      * @param outState Увеличиваем переменную spins и сохраняем её в bundle.
      */
@@ -246,18 +222,6 @@ public class MainActivity
         outState.putInt("checked", variants.getCheckedRadioButtonId());
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-    }
-
     /**
      * ExamsActivity запускается в режиме singleInstance
      * чтобы стек не копился.
@@ -266,6 +230,9 @@ public class MainActivity
         startActivity(new Intent(this, ExamsActivity.class));
     }
 
+    /**
+     * Вызывается из диалога ConfirmHintDialogFragment.
+     */
     @Override
     public void onPositiveDialogClick(DialogFragment dialog) {
         Intent intent = new Intent(MainActivity.this, HintActivity.class);
@@ -274,6 +241,9 @@ public class MainActivity
         startActivity(intent);
     }
 
+    /**
+     * Вызывается из диалога ConfirmHintDialogFragment.
+     */
     @Override
     public void onNegativeDialogClick(DialogFragment dialog) {
         Toast.makeText(this, "Молодец!!!", Toast.LENGTH_SHORT).show();
