@@ -35,6 +35,8 @@
     <string name="back">Back</string>
     <string name="to_list">To Exam List</string>
     <string name="date_time">Data/Time</string>
+    <string name="add_item">Add</string>
+    <string name="delete_item">Delete</string>
     <string-array name="domain_arrays">
         <item>Choose domain</item>
         <item>Moscow region</item>

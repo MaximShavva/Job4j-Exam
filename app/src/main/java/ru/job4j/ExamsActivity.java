@@ -3,13 +3,18 @@ package ru.job4j;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,7 +29,13 @@ import java.util.Locale;
  * @version 1.
  * @since 9.05.2019г.
  */
-public class ExamsActivity extends AppCompatActivity {
+public class ExamsActivity extends AppCompatActivity
+        implements ClearDialog.ClearDialogListener {
+
+    /**
+     * Список всех экзаменов.
+     */
+    private List<Exam> exams = new ArrayList<>();
 
     /**
      * Объект представления прокручиваемого списка.
@@ -32,7 +43,7 @@ public class ExamsActivity extends AppCompatActivity {
     private RecyclerView recycler;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exams);
         this.recycler = findViewById(R.id.exams);
@@ -40,12 +51,52 @@ public class ExamsActivity extends AppCompatActivity {
         updateUI();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.exams, menu);
+        return true;
+    }
+
+    /**
+     * Реагируем на выбор пункта меню.
+     *
+     * @param item Элемент меню, на котором был клик.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_item:
+                Toast.makeText(this, "ADD", Toast.LENGTH_SHORT).show();
+                int index = exams.size();
+                exams.add(new Exam(index, String.format("Exam %s", index),
+                        System.currentTimeMillis(), index));
+                recycler.getAdapter().notifyDataSetChanged();
+                return true;
+            case R.id.delete_item:
+                DialogFragment dialog = new ClearDialog();
+                dialog.show(getSupportFragmentManager(), "clear_dialog");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * Калбэк диалогового меню.
+     * Очищаем список экзаменов.
+     */
+    @Override
+    public void onOKtoClear() {
+        exams.clear();
+        recycler.getAdapter().notifyDataSetChanged();
+    }
+
     /**
      * Присваиваем нашему recycler адаптер для List exams.
      */
     private void updateUI() {
-        List<Exam> exams = new ArrayList<Exam>();
-        for (int index = 0; index != 100; index++) {
+        for (int index = 0; index != 5; index++) {
             exams.add(new Exam(index, String.format("Exam %s", index), System.currentTimeMillis(), index));
         }
         this.recycler.setAdapter(new ExamAdapter(exams));
