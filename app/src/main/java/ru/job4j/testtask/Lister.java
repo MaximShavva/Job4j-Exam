@@ -33,7 +33,7 @@ public class Lister extends AppCompatActivity
      * Используем менеджер фрагментов в нескольких методах,
      * поэтому храним ссылку на него в классе активности.
      */
-    FragmentManager fm;
+    private FragmentManager fm;
 
     /**
      * Содержит список работников.

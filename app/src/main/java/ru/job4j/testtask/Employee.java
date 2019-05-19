@@ -82,6 +82,32 @@ public class Employee {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        if (name != null ? !name.equals(employee.name) : employee.name != null) return false;
+        if (last != null ? !last.equals(employee.last) : employee.last != null) return false;
+        if (birthday != null ? !birthday.equals(employee.birthday) : employee.birthday != null)
+            return false;
+        if (photo != null ? !photo.equals(employee.photo) : employee.photo != null) return false;
+        if (occupation != null ? !occupation.equals(employee.occupation) : employee.occupation != null)
+            return false;
+        return format != null ? format.equals(employee.format) : employee.format == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (last != null ? last.hashCode() : 0);
+        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        result = 31 * result + (photo != null ? photo.hashCode() : 0);
+        result = 31 * result + (occupation != null ? occupation.hashCode() : 0);
+        result = 31 * result + (format != null ? format.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "name='" + name + '\''
                 + ", last='" + last + '\''

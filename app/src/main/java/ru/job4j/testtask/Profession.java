@@ -1,5 +1,7 @@
 package ru.job4j.testtask;
 
+import java.util.Objects;
+
 /**
  * Класс содержит данные о конкретной профессии.
  *
@@ -29,6 +31,21 @@ public class Profession {
 
     public int getCode() {
         return code;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Profession that = (Profession) o;
+        return code == that.code && profession.equals(that.profession);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = profession != null ? profession.hashCode() : 0;
+        result = 31 * result + code;
+        return result;
     }
 
     @Override

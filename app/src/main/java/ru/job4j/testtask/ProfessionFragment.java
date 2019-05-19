@@ -49,10 +49,6 @@ public class ProfessionFragment extends Fragment {
         void onProfessionClick(String profession);
     }
 
-    public ProfessionFragment() {
-        // Required empty public constructor
-    }
-
     /**
      * При создании фрагмента назначаем списку профессий
      * LayoutManager и адаптер.

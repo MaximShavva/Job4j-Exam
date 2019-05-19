@@ -36,12 +36,12 @@ public class DateTime
      * Создаём форматировщик даты.
      */
     @SuppressLint({"DefaultLocale", "SimpleDateFormat"})
-    SimpleDateFormat df = new SimpleDateFormat("d MMMM yyyy");
+    private SimpleDateFormat df = new SimpleDateFormat("d MMMM yyyy");
 
     /**
      * Строка содержит введённую пользователем дату.
      */
-    String term;
+    private String term;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

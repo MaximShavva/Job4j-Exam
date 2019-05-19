@@ -37,10 +37,6 @@ public class StaffFragment extends Fragment {
         void onEmployeeClick(String lastname);
     }
 
-    public StaffFragment() {
-        // Required empty public constructor
-    }
-
     /**
      * При присоединении фрагмента сохраняем контекст в mListener.
      */
