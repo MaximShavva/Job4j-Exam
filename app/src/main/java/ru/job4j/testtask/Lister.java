@@ -2,32 +2,32 @@ package ru.job4j.testtask;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import ru.job4j.R;
+import ru.job4j.store.ExamBaseHelper;
 
 /**
  * Активность, которая управляет остальными фрагментами приложения.
  *
  * @author Шавва Максим.
- * @version 1.
- * @since 16.05.2019г.
+ * @version 1.1
+ * @since 2.05.2019г.
  */
 public class Lister extends AppCompatActivity
         implements ProfessionFragment.OnProfessionListener,
-        StaffFragment.OnStaffListener {
+        StaffFragment.OnStaffListener,
+        EmployeeModel.LoadEmployeeCallback {
+
+    public static final String TAG = "ExamActivity";
 
     /**
      * Используем менеджер фрагментов в нескольких методах,
@@ -36,9 +36,14 @@ public class Lister extends AppCompatActivity
     private FragmentManager fm;
 
     /**
-     * Содержит список работников.
+     * ActionBar нужен для доступа к кнопке "назад".
      */
-    private List<Employee> staff = new ArrayList<>();
+    private ActionBar actionBar;
+
+    /**
+     * Модель работы с базой данных.
+     */
+    private EmployeeModel model;
 
     /**
      * Флаг видимости кнопки назад.
@@ -46,11 +51,25 @@ public class Lister extends AppCompatActivity
     private boolean backVisible = false;
 
     /**
+     * Сохраняем ссылку на работника для обращения к ней из фрагмента.
+     */
+    private Employee employee;
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    /**
      * Храним ссылки на фрагменты, чтобы не создавать их
      * поновой каждый раз.
      */
     private StaffFragment staffFragment;
     private EmployeeFragment employeeFragment;
+    private ProfessionFragment professionFragment;
 
     /**
      * Вызывается при создании пользовательского интерфейса.
@@ -59,10 +78,10 @@ public class Lister extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lister);
-        setStaff();
+        model = new EmployeeModel(ExamBaseHelper.getInstance(this));
         fm = getSupportFragmentManager();
         if (null == fm.findFragmentById(R.id.list_container)) {
-            ProfessionFragment professionFragment = new ProfessionFragment();
+            professionFragment = new ProfessionFragment();
             fm.beginTransaction()
                     .add(R.id.list_container, professionFragment)
                     .addToBackStack(null)
@@ -77,6 +96,8 @@ public class Lister extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_lister, menu);
+        actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
         return true;
     }
 
@@ -85,11 +106,24 @@ public class Lister extends AppCompatActivity
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem back = menu.findItem(R.id.back);
         MenuItem show = menu.findItem(R.id.show);
-        back.setVisible(backVisible);
         show.setVisible(!backVisible);
+        String title = getString(R.string.app_name);
+        String back = getString(R.string.backward);
+        actionBar.setTitle(backVisible ? back : title);
+        actionBar.setDisplayHomeAsUpEnabled(backVisible);
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d(TAG, "BackStack: " + fm.getBackStackEntryCount());
+        if (fm.getBackStackEntryCount() == 1) {
+            backVisible = false;
+            invalidateOptionsMenu();
+        }
+        if (fm.getBackStackEntryCount() == 0) finish();
     }
 
     /**
@@ -112,8 +146,9 @@ public class Lister extends AppCompatActivity
                 backVisible = true;
                 invalidateOptionsMenu();
                 break;
-            case R.id.back:
+            case android.R.id.home:
                 fm.popBackStack();
+                Log.d(TAG, "BackStack: " + fm.getBackStackEntryCount());
                 if (fm.getBackStackEntryCount() == 2) {
                     backVisible = false;
                     invalidateOptionsMenu();
@@ -124,38 +159,48 @@ public class Lister extends AppCompatActivity
     }
 
     /**
-     * Заполняем список работниками из base.json.
+     * После создания ProfessionFragment(), он сообщает об этом
+     * вызовом этого метода.
      */
-    private void setStaff() {
-        EmployeeSupplier supplier = new EmployeeSupplier();
-        try {
-            staff = supplier.getStaff(this, "base.json");
-        } catch (IOException e) {
-            Toast.makeText(this,
-                    "Reading data from file is fault!",
-                    Toast.LENGTH_LONG)
-                    .show();
-        } catch (JSONException e) {
-            Toast.makeText(this,
-                    "It Fails to read Questions!",
-                    Toast.LENGTH_SHORT)
-                    .show();
-        }
+    @Override
+    public void onProfFragmentCreated() {
+        model.loadProfession(this);
     }
 
     /**
-     * @param filter профессия, по которой формируем список.
-     * @return Отфильтрованный список работников.
+     * Колбэк из StaffFragment сообщает, что фрагмент создан.
+     * Теперь заполняем адаптер списка данными.
      */
-    public List<Employee> getStaff(String filter) {
-        List<Employee> result = new ArrayList<>();
-        if (!"unfiltered".equals(filter)) {
-            for (Employee employee : staff) {
-                if (employee.getOccupation().getProfession().equals(filter))
-                    result.add(employee);
-            }
-        } else result = staff;
-        return result;
+    @Override
+    public void onStaffFragmentCreated(String filter) {
+        model.loadEmployee(this, filter);
+    }
+
+    /**
+     * Колбэк вызывается из модели, когда данные загружены из базы.
+     */
+    @Override
+    public void onEmployeeLoaded(List<Employee> employees) {
+        staffFragment.getAdapter().setStaff(employees);
+    }
+
+    /**
+     * Колбэк вызывается из модели, когда список профессий загружен из базы.
+     */
+    @Override
+    public void onProfessionLoaded(List<String> professions) {
+        professionFragment.getAdapter().setProfessions(professions);
+    }
+
+    /**
+     * Кoлбэк вызывается из модели, когда данные не удалось загрузить.
+     */
+    @Override
+    public void onLoadError(Exception e) {
+        Toast.makeText(getBaseContext(),
+                "DataBase unavailable: " + e.getMessage(),
+                Toast.LENGTH_SHORT)
+                .show();
     }
 
     /**
@@ -183,38 +228,17 @@ public class Lister extends AppCompatActivity
     /**
      * Вызываем, когда нужно отрисовать фрагмент с профилем работника.
      *
-     * @param lastName Фамилия работника.
+     * @param employee работник, данные которого передадим во фрагмент-профиль.
      */
     @Override
-    public void onEmployeeClick(String lastName) {
-        Bundle bundle = new Bundle();
-        for (Employee employee : staff) {
-            if (employee.getLast().equals(lastName)) {
-                fillBundle(bundle, employee);
-                break;
-            }
-        }
+    public void onEmployeeClick(Employee employee) {
+        this.employee = employee;
         if (null == employeeFragment) {
             employeeFragment = new EmployeeFragment();
         }
-        employeeFragment.setArguments(bundle);
         fm.beginTransaction()
                 .replace(R.id.list_container, employeeFragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    /**
-     * @param bundle Кладём в объект данные по работнику.
-     * @param employee работник, данные которого используем.
-     */
-    private void fillBundle(Bundle bundle, Employee employee) {
-        SimpleDateFormat df = new SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH);
-        bundle.putString("name", employee.getName());
-        bundle.putString("last", employee.getLast());
-        bundle.putString("birthday", df.format(employee.getBirthday()));
-        bundle.putString("photo", employee.getPhoto());
-        bundle.putString("profession", employee.getOccupation().getProfession());
-        bundle.putInt("code", employee.getOccupation().getCode());
     }
 }

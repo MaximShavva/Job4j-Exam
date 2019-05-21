@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.job4j.R;
@@ -20,8 +21,8 @@ import ru.job4j.R;
  * Фрагмент отрисовывает список работников по профессиям согласно фильтру.
  *
  * @author Шавва Максим.
- * @version 1.
- * @since 16.05.2019г.
+ * @version 1.1
+ * @since 2.05.2019г.
  */
 public class StaffFragment extends Fragment {
 
@@ -31,10 +32,16 @@ public class StaffFragment extends Fragment {
     private OnStaffListener mListener;
 
     /**
+     * Ссылка на адаптер
+     */
+    private EmployeeAdapter adapter;
+
+    /**
      * Интерфейс слушателя нажатия на элемент списка.
      */
     public interface OnStaffListener {
-        void onEmployeeClick(String lastname);
+        void onEmployeeClick(Employee employee);
+        void onStaffFragmentCreated(String filter);
     }
 
     /**
@@ -70,11 +77,16 @@ public class StaffFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profession, container, false);
         RecyclerView recycler = (RecyclerView) view;
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new EmployeeAdapter();
+        recycler.setAdapter(adapter);
         Bundle bundle = getArguments();
         String filter = bundle.getString("filter");
-        List<Employee> staff = ((Lister) mListener).getStaff(filter);
-        recycler.setAdapter(new EmployeeAdapter(staff));
+        mListener.onStaffFragmentCreated(filter);
         return view;
+    }
+
+    public EmployeeAdapter getAdapter() {
+        return adapter;
     }
 
     /**
@@ -97,11 +109,7 @@ public class StaffFragment extends Fragment {
         /**
          * Список всех работников.
          */
-        private List<Employee> staff;
-
-        public EmployeeAdapter(List<Employee> staff) {
-            this.staff = staff;
-        }
+        private List<Employee> staff = new ArrayList<>();
 
         @NonNull
         @Override
@@ -124,8 +132,14 @@ public class StaffFragment extends Fragment {
             last.setText(employee.getLast());
             occupy.setText(employee.getOccupation().getProfession());
             holder.view.setOnClickListener(
-                    view -> mListener.onEmployeeClick(staff.get(i).getLast())
+                    view -> mListener.onEmployeeClick(employee)
             );
+        }
+
+        public void setStaff(List<Employee> staff) {
+            this.staff.clear();
+            this.staff.addAll(staff);
+            notifyDataSetChanged();
         }
 
         @Override

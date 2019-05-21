@@ -39,22 +39,16 @@ public class Employee {
      */
     private Profession occupation;
 
-    SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.FRANCE);
-
     public Employee(String name,
                     String last,
-                    String birthday,
+                    Date birthday,
                     String photo,
                     Profession occupation) {
         this.name = name;
         this.last = last;
         this.photo = photo;
+        this.birthday = birthday;
         this.occupation = occupation;
-        try {
-            this.birthday = format.parse(birthday);
-        } catch (ParseException e) {
-            this.birthday = new Date(1);
-        }
     }
 
     public String getName() {
@@ -77,10 +71,6 @@ public class Employee {
         return occupation;
     }
 
-    public SimpleDateFormat getFormat() {
-        return format;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,7 +83,7 @@ public class Employee {
         if (photo != null ? !photo.equals(employee.photo) : employee.photo != null) return false;
         if (occupation != null ? !occupation.equals(employee.occupation) : employee.occupation != null)
             return false;
-        return format != null ? format.equals(employee.format) : employee.format == null;
+        return true;
     }
 
     @Override
@@ -103,7 +93,6 @@ public class Employee {
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (photo != null ? photo.hashCode() : 0);
         result = 31 * result + (occupation != null ? occupation.hashCode() : 0);
-        result = 31 * result + (format != null ? format.hashCode() : 0);
         return result;
     }
 
@@ -111,6 +100,7 @@ public class Employee {
     public String toString() {
         return "name='" + name + '\''
                 + ", last='" + last + '\''
+                + ", photo='" + photo + '\''
                 + ", occupation=" + occupation;
     }
 }

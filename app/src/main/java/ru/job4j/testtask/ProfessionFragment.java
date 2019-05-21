@@ -27,8 +27,8 @@ import ru.job4j.R;
  * Фрагмент отрисовывает список всех профессий в базе данных.
  *
  * @author Шавва Максим.
- * @version 1.
- * @since 16.05.2019г.
+ * @version 1.1
+ * @since 2.05.2019г.
  */
 public class ProfessionFragment extends Fragment {
 
@@ -38,29 +38,16 @@ public class ProfessionFragment extends Fragment {
     private OnProfessionListener mListener;
 
     /**
-     * Сохраняем сюда все имеющиеся профессии из базы работников.
+     * Адаптер списка профессий.
      */
-    private Set<String> professions = new HashSet<>();
+    private ProfAdapter adapter;
 
     /**
      * Интерфейс слушателя нажатия на элемент списка.
      */
     public interface OnProfessionListener {
         void onProfessionClick(String profession);
-    }
-
-    /**
-     * При создании фрагмента назначаем списку профессий
-     * LayoutManager и адаптер.
-     */
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profession, container, false);
-        RecyclerView recycler = (RecyclerView) view;
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycler.setAdapter(new ProfAdapter(professions));
-        return view;
+        void onProfFragmentCreated();
     }
 
     /**
@@ -75,17 +62,22 @@ public class ProfessionFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnProfessionListener");
         }
-        setProfessions(context);
     }
 
     /**
-     * Выбираем все профессии из списка работников.
+     * При создании фрагмента назначаем списку профессий
+     * LayoutManager и адаптер.
      */
-    private void setProfessions(Context context) {
-        Lister lister = (Lister) context;
-        for (Employee employee : lister.getStaff("unfiltered")) {
-            professions.add(employee.getOccupation().getProfession());
-        }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profession, container, false);
+        RecyclerView recycler = (RecyclerView) view;
+        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new ProfAdapter();
+        recycler.setAdapter(adapter);
+        mListener.onProfFragmentCreated();
+        return view;
     }
 
     /**
@@ -95,6 +87,13 @@ public class ProfessionFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    /**
+     * Возвращаем ссылку на адаптер.
+     */
+    public ProfAdapter getAdapter() {
+        return adapter;
     }
 
     /**
@@ -117,12 +116,7 @@ public class ProfessionFragment extends Fragment {
         /**
          * Список всех профессий.
          */
-        private List<String> professions;
-
-        public ProfAdapter(Set<String> professions) {
-            this.professions = new ArrayList<>(professions);
-            Log.d("ExamActivity", professions.toString());
-        }
+        private List<String> professions = new ArrayList<>();
 
         @NonNull
         @Override
@@ -143,6 +137,17 @@ public class ProfessionFragment extends Fragment {
             item.setOnClickListener(
                     view -> mListener.onProfessionClick(((TextView) view).getText().toString())
             );
+        }
+
+        /**
+         * Обновляем список профессий в адаптере.
+         *
+         * @param professions список профессий.
+         */
+        public void setProfessions(List<String> professions) {
+            this.professions.clear();
+            this.professions.addAll(professions);
+            notifyDataSetChanged();
         }
 
         @Override

@@ -5,9 +5,4 @@
         android:id="@+id/show"
         android:title="@string/show_all"
         app:showAsAction="always|withText" />
-
-    <item
-        android:id="@+id/back"
-        android:title="@string/back_menu"
-        app:showAsAction="always|withText" />
 </menu>
