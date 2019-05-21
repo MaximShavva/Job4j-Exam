@@ -1,8 +1,12 @@
 package ru.job4j.testtask;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,17 +17,20 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import ru.job4j.R;
+import ru.job4j.store.ExamBaseHelper;
+import ru.job4j.store.StaffDbSchema;
 
 /**
  * Активность, которая управляет остальными фрагментами приложения.
  *
  * @author Шавва Максим.
  * @version 1.
- * @since 16.05.2019г.
+ * @since 21.05.2019г.
  */
 public class Lister extends AppCompatActivity
         implements ProfessionFragment.OnProfessionListener,
@@ -124,22 +131,33 @@ public class Lister extends AppCompatActivity
     }
 
     /**
-     * Заполняем список работниками из base.json.
+     * Заполняем список работниками из SQLite.
      */
     private void setStaff() {
-        EmployeeSupplier supplier = new EmployeeSupplier();
-        try {
-            staff = supplier.getStaff(this, "base.json");
-        } catch (IOException e) {
-            Toast.makeText(this,
-                    "Reading data from file is fault!",
-                    Toast.LENGTH_LONG)
-                    .show();
-        } catch (JSONException e) {
-            Toast.makeText(this,
-                    "It Fails to read Questions!",
-                    Toast.LENGTH_SHORT)
-                    .show();
+        try (SQLiteDatabase db = ExamBaseHelper.getInstance(this).getReadableDatabase()) {
+            Cursor cursor = db.query(StaffDbSchema.StaffTable.STAFF,
+                    null, null, null,
+                    null, null, null);
+            int first = cursor.getColumnIndex(StaffDbSchema.StaffTable.Cols.FIRSTNAME);
+            int last = cursor.getColumnIndex(StaffDbSchema.StaffTable.Cols.LASTNAME);
+            int birth = cursor.getColumnIndex(StaffDbSchema.StaffTable.Cols.BIRTHDAY);
+            int photo = cursor.getColumnIndex(StaffDbSchema.StaffTable.Cols.PHOTOURL);
+            int prof = cursor.getColumnIndex(StaffDbSchema.StaffTable.Cols.PROFESSION);
+            int code = cursor.getColumnIndex(StaffDbSchema.StaffTable.Cols.CODE);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Employee employee = new Employee(
+                        cursor.getString(first),
+                        cursor.getString(last),
+                        new Date(cursor.getLong(birth)),
+                        cursor.getString(photo),
+                        new Profession(cursor.getString(prof), cursor.getInt(code))
+                );
+                staff.add(employee);
+                cursor.moveToNext();
+            }
+        } catch (SQLiteException e) {
+            Toast.makeText(this, "DataBase unavailable", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -205,7 +223,7 @@ public class Lister extends AppCompatActivity
     }
 
     /**
-     * @param bundle Кладём в объект данные по работнику.
+     * @param bundle   Кладём в объект данные по работнику.
      * @param employee работник, данные которого используем.
      */
     private void fillBundle(Bundle bundle, Employee employee) {
