@@ -1,11 +1,9 @@
 package ru.job4j;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -24,8 +22,8 @@ import java.util.Locale;
  * Класс - Активность - тест с вопросами.
  *
  * @author Шавва Максим.
- * @version 1.
- * @since 6.05.2019г.
+ * @version 1.1
+ * @since 17.05.2019г.
  */
 public class MainActivity
         extends AppCompatActivity
@@ -71,18 +69,14 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "onCreate");
-        setQuestions();
-        this.fillForm();
-        this.setListeners();
         if (savedInstanceState != null) {
             this.spins = savedInstanceState.getInt("spins", -1);
             this.correct = savedInstanceState.getInt("correct", 0);
             this.position = savedInstanceState.getInt("position", 0);
             int checked = savedInstanceState.getInt("checked", -1);
             ((RadioGroup) findViewById(R.id.variants)).check(checked);
-            Log.d(TAG, String.format("Количество поворотов экрана = %d", spins));
         }
+        setQuestions();
         this.fillForm();
         this.setListeners();
     }
@@ -131,6 +125,7 @@ public class MainActivity
             Intent intent = new Intent(MainActivity.this, ResultActivity.class);
             intent.putExtra(ALL, questions.size());
             intent.putExtra(RIGHT, correct);
+            intent.putExtra("id", getIntent().getIntExtra("id", -1));
             startActivity(intent);
             return;
         }
@@ -168,39 +163,6 @@ public class MainActivity
                 .setGiven(variants.getCheckedRadioButtonId());
         position--;
         fillForm();
-        next.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        RadioGroup variants = findViewById(R.id.variants);
-                        if (variants.getCheckedRadioButtonId() == -1) {
-                            Toast.makeText(MainActivity.this,
-                                    "Fill in any answer",
-                                    Toast.LENGTH_SHORT)
-                                    .show();
-                        } else {
-                            questions.get(position)
-                                    .setGiven(variants.getCheckedRadioButtonId());
-                            showAnswer();
-                            position++;
-                            fillForm();
-                        }
-                    }
-                }
-        );
-        Button previous = findViewById(R.id.previous);
-        previous.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        RadioGroup variants = findViewById(R.id.variants);
-                        questions.get(position)
-                                .setGiven(variants.getCheckedRadioButtonId());
-                        position--;
-                        fillForm();
-                    }
-                }
-        );
     }
 
     /**
@@ -218,7 +180,7 @@ public class MainActivity
      */
     private void fillForm() {
         findViewById(R.id.previous).setEnabled(position != 0);
-        findViewById(R.id.next).setEnabled(position != questions.size() - 1);
+        findViewById(R.id.next).setEnabled(true);
         final TextView text = findViewById(R.id.question);
         Question question = this.questions.get(this.position);
         text.setText(question.getText());
@@ -241,28 +203,10 @@ public class MainActivity
         Question question = this.questions.get(this.position);
         Toast.makeText(this,
                 String.format(Locale.ENGLISH,
-                        "Your answer is %d, correct is %d",
+                        getString(R.string.your_answer),
                         id, question.getAnswer()),
                 Toast.LENGTH_SHORT)
                 .show();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
     }
 
     /**
@@ -278,18 +222,6 @@ public class MainActivity
         outState.putInt("checked", variants.getCheckedRadioButtonId());
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-    }
-
     /**
      * ExamsActivity запускается в режиме singleInstance
      * чтобы стек не копился.
@@ -298,6 +230,9 @@ public class MainActivity
         startActivity(new Intent(this, ExamsActivity.class));
     }
 
+    /**
+     * Вызывается из диалога ConfirmHintDialogFragment.
+     */
     @Override
     public void onPositiveDialogClick(DialogFragment dialog) {
         Intent intent = new Intent(MainActivity.this, HintActivity.class);
@@ -306,6 +241,9 @@ public class MainActivity
         startActivity(intent);
     }
 
+    /**
+     * Вызывается из диалога ConfirmHintDialogFragment.
+     */
     @Override
     public void onNegativeDialogClick(DialogFragment dialog) {
         Toast.makeText(this, "Молодец!!!", Toast.LENGTH_SHORT).show();
