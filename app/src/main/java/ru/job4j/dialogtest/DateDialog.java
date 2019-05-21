@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.dialogtest;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

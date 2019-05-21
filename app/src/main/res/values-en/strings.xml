@@ -37,6 +37,14 @@
     <string name="date_time">Data/Time</string>
     <string name="add_item">Add</string>
     <string name="delete_item">Delete</string>
+    <string name="show_all">show_all</string>
+    <string name="first_name">First name:</string>
+    <string name="last_name">Last name:</string>
+    <string name="birth_day">Birthday:</string>
+    <string name="photo">Photos:</string>
+    <string name="profession">Profession:</string>
+    <string name="prof_code">Prof code:</string>
+    <string name="back_menu">Back</string>
     <string-array name="domain_arrays">
         <item>Choose domain</item>
         <item>Moscow region</item>

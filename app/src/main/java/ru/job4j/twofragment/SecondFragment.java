@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.twofragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,31 +10,33 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import ru.job4j.R;
+
 /**
- * Класс - первый фрагмент.
+ * Класс - второй фрагмент.
  *
  * @author Шавва Максим.
  * @version 1.
  * @since 8.05.2019г.
  */
-public class FirstFragment extends Fragment {
+public class SecondFragment extends Fragment {
 
     /**
      * Ссылка на кнопку во фрагменте.
      */
-    private Button nextFragment;
+    private Button previous;
 
-    private OnNextButtonClickListener callback;
+    private OnBackButtonClickListener callback;
 
-    public interface OnNextButtonClickListener {
-        void onNextButtonClicked(String message);
+    public interface OnBackButtonClickListener {
+        void onBackButtonClicked(String message);
     }
 
     public void onClick(View view) {
-        callback.onNextButtonClicked("Next button clicked");
+        callback.onBackButtonClicked("Back button clicked");
     }
 
-    public FirstFragment() {
+    public SecondFragment() {
         // Required empty public constructor
     }
 
@@ -44,20 +46,20 @@ public class FirstFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        callback = (OnNextButtonClickListener) context;
+        callback = (OnBackButtonClickListener) context;
     }
 
     /**
-     * Этот метод определяет представление фрагмента
-     * (аналогично методу onCreate в активити).
+     * Наполняем фрагмент представлениями, присваиваем слушателя кнопке,
+     * Извлекаем переданный текст в TextView message.
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_first, container, false);
-        nextFragment = view.findViewById(R.id.next_fragment);
-        nextFragment.setOnClickListener(this::onClick);
-        TextView message = view.findViewById(R.id.message_back);
+        View view = inflater.inflate(R.layout.fragment_second, container, false);
+        previous = view.findViewById(R.id.back);
+        previous.setOnClickListener(this::onClick);
+        TextView message = view.findViewById(R.id.message);
         Bundle bundle = getArguments();
         if (bundle != null) {
             message.setText(bundle.getString("message", "default"));

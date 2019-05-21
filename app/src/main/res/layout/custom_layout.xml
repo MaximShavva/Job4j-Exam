@@ -17,7 +17,7 @@
 
             <TextView
                 android:id="@+id/textView8"
-                style="@style/CustomText"
+                style="@style/ListText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -42,7 +42,7 @@
 
             <TextView
                 android:id="@+id/textView2"
-                style="@style/CustomText"
+                style="@style/ListText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
@@ -65,7 +65,7 @@
 
             <TextView
                 android:id="@+id/textView"
-                style="@style/CustomText"
+                style="@style/ListText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
@@ -88,7 +88,7 @@
 
             <TextView
                 android:id="@+id/textView3"
-                style="@style/CustomText"
+                style="@style/ListText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
@@ -111,7 +111,7 @@
 
             <TextView
                 android:id="@+id/textView9"
-                style="@style/CustomText"
+                style="@style/ListText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -158,7 +158,7 @@
 
             <TextView
                 android:id="@+id/textView4"
-                style="@style/CustomText"
+                style="@style/ListText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
@@ -181,7 +181,7 @@
 
             <TextView
                 android:id="@+id/textView5"
-                style="@style/CustomText"
+                style="@style/ListText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
@@ -204,7 +204,7 @@
 
             <TextView
                 android:id="@+id/textView6"
-                style="@style/CustomText"
+                style="@style/ListText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
@@ -227,7 +227,7 @@
 
             <TextView
                 android:id="@+id/textView7"
-                style="@style/CustomText"
+                style="@style/ListText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="350dp"
