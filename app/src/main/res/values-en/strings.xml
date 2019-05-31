@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FirstExam</string>
+    <string name="customize">Customization</string>
     <string name="domain_prompt">Choose domain</string>
     <string name="day_prompt">Choose day</string>
     <string name="month_prompt">Choose month</string>

@@ -2,5 +2,14 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#06F</color>
+    <color name="colorDarkBlue">#0D2468</color>
+    <color name="colorTitle">#FFF</color>
+    <color name="colorGrey">#EEE</color>
+    <color name="colorBlack">#000</color>
+    <color name="colorBorder">#DDD</color>
+    <color name="switchTrackActive">#0D2468</color>
+    <color name="switchTrackNormal">#CCC</color>
+    <color name="switchThumbActive">#FFF</color>
+    <color name="switchThumbkNormal">#FFF</color>
 </resources>
